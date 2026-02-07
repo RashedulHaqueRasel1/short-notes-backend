@@ -7,6 +7,7 @@ import noteRoutes from "./modules/note/note.route";
 import syncRoutes from "./modules/sync/sync.route";
 import { errorHandler } from "./middlewares/errorHandler";
 import { notFound } from "./middlewares/notFound";
+import healthRouter from "./routes/health.route";
 
 const app = express();
 
@@ -24,12 +25,7 @@ if (env.NODE_ENV === "development") {
 }
 
 // Routes
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    ok: true,
-    time: new Date().toISOString(),
-  });
-});
+app.use("/health", healthRouter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes);
